@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3ff3u427jd0u"]
+[gd_scene load_steps=7 format=3 uid="uid://d3ff3u427jd0u"]
 
+[ext_resource type="Script" path="res://examples/camera_3d.gd" id="1_b66qq"]
 [ext_resource type="Script" path="res://examples/marker_draw.gd" id="1_dmyyf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_imyb7"]
@@ -16,26 +17,26 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0syls"]
-diffuse_mode = 1
-albedo_color = Color(0.867188, 1, 0.878601, 1)
+albedo_color = Color(0.652344, 0.652344, 0.652344, 1)
 
 [node name="World3d" type="Node3D"]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5pfc8")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 1.3, 2)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 0.68526, 0.728299, 0, -0.728299, 0.68526, -2.38419e-07, 5.66954, 4.49755)
+script = ExtResource("1_b66qq")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.536367, -1.44809)
+script = ExtResource("1_dmyyf")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.226954, 0)
 material_override = SubResource("StandardMaterial3D_0syls")
 size = Vector3(50, 0.2, 50)
-
-[node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.536367, -1.44809)
-script = ExtResource("1_dmyyf")

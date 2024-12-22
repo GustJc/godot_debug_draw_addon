@@ -22,6 +22,16 @@ func _process(delta: float) -> void:
 		_clear_all_lines()
 
 
+func set_line_relative(pointA : Vector3, pointB : Vector3, color: Color = Color.RED, duration: float = 1.0):
+	%LineSimpleMM.set_line_relative(pointA, pointB, color, duration)
+
+func set_line_thick_relative(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color: Color = Color.BLACK, duration: float = 1.0):
+	%LineMM.set_line_relative(pointA, pointB, thickness, color, duration)
+
+func draw_sphere_mm(pos: Vector3, radius: float, color: Color = Color(Color.RED, 0.85), duration: float = 0.1) -> void:
+	%SphereMM.set_sphere(pos, radius, color, duration)
+
+
 #region Draw lines
 func draw_line(pointA : Vector3, pointB : Vector3, color: Color = Color.BLACK):
 	if not use_debug_draw or pointA.is_equal_approx(pointB):

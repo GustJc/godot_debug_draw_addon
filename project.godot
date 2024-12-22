@@ -14,7 +14,6 @@ config/name="debug-draw"
 run/main_scene="res://examples/world_3d.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 run/max_fps=60
-config/icon="res://icon.svg"
 
 [autoload]
 
