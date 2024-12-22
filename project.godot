@@ -1,0 +1,33 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="debug-draw"
+run/main_scene="res://examples/world_3d.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
+run/max_fps=60
+config/icon="res://icon.svg"
+
+[autoload]
+
+DebugDraw="*res://addons/debugdraw/autoload/DebugDraw.tscn"
+
+[display]
+
+window/size/always_on_top=true
+
+[dotnet]
+
+project/assembly_name="debug-draw"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/debugdraw/plugin.cfg")
