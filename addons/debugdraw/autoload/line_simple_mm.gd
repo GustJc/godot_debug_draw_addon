@@ -22,7 +22,12 @@ func _init() -> void:
 	multimesh.mesh.surface_set_material(0, mat)
 
 
-func set_line_relative(pointA : Vector3, pointB : Vector3, color: Color = Color.RED, duration: float = 1.0):
+
+func set_line_relative(pointA : Vector3, dir_len : Vector3, color: Color = Color.RED, duration: float = 1.0):
+	set_line(pointA, pointA+dir_len, color, duration)
+
+
+func set_line(pointA : Vector3, pointB : Vector3, color: Color = Color.RED, duration: float = 1.0):
 	var id: int = last_id
 	last_id = (last_id+1) % multimesh.instance_count
 	# Show the next instance
@@ -30,14 +35,14 @@ func set_line_relative(pointA : Vector3, pointB : Vector3, color: Color = Color.
 	multimesh.set_instance_color(id, color)
 
 	var l_transform = Transform3D(Basis(), pointA)
-	var dir = pointA.direction_to(pointA+pointB)
+	var dir = pointA.direction_to(pointB)
 	if abs(dir.y) > 0.95:
 		l_transform.basis = l_transform.basis.looking_at(dir, Vector3.FORWARD)
 	else:
 		l_transform.basis = l_transform.basis.looking_at(dir)
 
 	# Scale mesh to fit length and thickness. Base mesh if 1 thick, 1 length.
-	var len = pointA.distance_to(pointA+pointB)
+	var len = pointA.distance_to(pointB)
 	l_transform = l_transform.scaled_local(Vector3(1.0, 1.0, len))
 
 	# Sphere mesh has radius 1. So scaling it equals effective radius
