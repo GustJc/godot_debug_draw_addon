@@ -36,15 +36,15 @@ func _process(delta: float) -> void:
 
 
 #region MultiMesh Macro Functions
-func draw_hit_ray(hit_pos: Vector3, hit_direction: Vector3, duration: float = 1.0,
-			hit_radius: float = 0.1, trail_len: float = 1.0,
+func draw_hit_ray(hit_pos: Vector3, hit_direction: Vector3, duration: float = 2.0,
+			hit_radius: float = 0.05, trail_len: float = 0.5,
 			hit_color: Color = Color(Color.RED, 0.8),
 			trail_color: Color = Color(Color.BLUE, 0.8)) -> void:
 	draw_sphere_mm(hit_pos, hit_radius, duration, hit_color)
 	draw_ray(hit_pos, hit_direction*trail_len, duration, trail_color)
 
 
-func draw_hit_ray_thick(hit_pos: Vector3, hit_direction: Vector3, duration: float = 1.0,
+func draw_hit_ray_thick(hit_pos: Vector3, hit_direction: Vector3, duration: float = 2.0,
 			hit_radius: float = 0.1, trail_len: float = 1.0, trail_thickness: float = 2.0,
 			hit_color: Color = Color(Color.RED, 0.8),
 			trail_color: Color = Color(Color.BLUE, 0.8) ) -> void:
@@ -56,25 +56,25 @@ func draw_hit_ray_thick(hit_pos: Vector3, hit_direction: Vector3, duration: floa
 #region MultiMesh Functions
 ## Draw a line from [param pointA] with direction and length [param dir_len].
 ## Uses a MultiMesh for drawing.
-func draw_ray(pointA : Vector3, dir_len : Vector3, duration: float = 1.0, color: Color = Color.RED):
+func draw_ray(pointA : Vector3, dir_len : Vector3, duration: float = 2.0, color: Color = Color.RED):
 	%LineSimpleMM.set_line_relative(pointA, dir_len, color, duration)
 
 
 ## Draw a line from [param pointA] to [param pointB].
 ## Uses a MultiMesh for drawing.
-func draw_line(pointA : Vector3, pointB : Vector3, duration: float = 1.0, color: Color = Color.RED):
+func draw_line(pointA : Vector3, pointB : Vector3, duration: float = 2.0, color: Color = Color.RED):
 	%LineSimpleMM.set_line(pointA, pointB, color, duration)
 
 
 ## Draw a thick line from [param pointA] with direction and length [param dir_len].
 ## Uses a MultiMesh for drawing.
-func draw_ray_thick(pointA : Vector3, dir_len : Vector3, duration: float = 1.0, thickness: float = 2.0, color: Color = Color.BLACK):
+func draw_ray_thick(pointA : Vector3, dir_len : Vector3, duration: float = 2.0, thickness: float = 2.0, color: Color = Color.BLACK):
 	%LineThickMM.set_line_relative(pointA, dir_len, thickness, color, duration)
 
 
 ## Draw a thick line from [param pointA] with direction and length [param dir_len].
 ## Uses a MultiMesh for drawing.
-func draw_line_thick(pointA : Vector3, pointB : Vector3, duration: float = 1.0, thickness: float = 2.0, color: Color = Color.BLACK):
+func draw_line_thick(pointA : Vector3, pointB : Vector3, duration: float = 2.0, thickness: float = 2.0, color: Color = Color.BLACK):
 	%LineThickMM.set_line(pointA, pointB, thickness, color, duration)
 
 

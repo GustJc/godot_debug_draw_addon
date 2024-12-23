@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d3ff3u427jd0u"]
+[gd_scene load_steps=8 format=3 uid="uid://d3ff3u427jd0u"]
 
 [ext_resource type="Script" path="res://examples/camera_3d.gd" id="1_b66qq"]
 [ext_resource type="Script" path="res://examples/marker_draw.gd" id="1_dmyyf"]
@@ -16,6 +16,8 @@ sky = SubResource("Sky_41vkr")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="BoxMesh" id="BoxMesh_xfdt1"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0syls"]
 albedo_color = Color(0.652344, 0.652344, 0.652344, 1)
 
@@ -29,8 +31,30 @@ transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 0.68526, 0.728299, 0, -0.728299, 0.68526, -2.38419e-07, 5.66954, 4.49755)
+transform = Transform3D(1, 0, 0, 0, 0.897166, 0.441693, 0, -0.441693, 0.897166, -2.38419e-07, 4.31447, 3.29514)
 script = ExtResource("1_b66qq")
+move_speed = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.41, 0, 0.5, -0.000784189)
+visible = false
+mesh = SubResource("BoxMesh_xfdt1")
+skeleton = NodePath("../Marker3D")
+
+[node name="Mesh3D" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+skeleton = NodePath("../Marker3D")
+
+[node name="Mesh3D2" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+skeleton = NodePath("../Marker3D")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 4, 1)
+mesh = SubResource("BoxMesh_xfdt1")
+skeleton = NodePath("../Marker3D")
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.536367, -1.44809)

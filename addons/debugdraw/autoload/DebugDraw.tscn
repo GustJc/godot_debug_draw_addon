@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://dsh5y12sgmhgi"]
 
 [ext_resource type="Script" path="res://addons/debugdraw/autoload/debug_draw.gd" id="1_47vo8"]
-[ext_resource type="Script" path="res://addons/debugdraw/autoload/multimesh_controller.gd" id="2_igrmx"]
-[ext_resource type="Script" path="res://addons/debugdraw/autoload/line_thick_mm.gd" id="3_gpp01"]
-[ext_resource type="Script" path="res://addons/debugdraw/autoload/line_simple_mm.gd" id="4_vr2v8"]
+[ext_resource type="Script" path="res://addons/debugdraw/autoload/multimesh/sphere_mm.gd" id="2_igrmx"]
+[ext_resource type="Script" path="res://addons/debugdraw/autoload/multimesh/line_thick_mm.gd" id="3_gpp01"]
+[ext_resource type="Script" path="res://addons/debugdraw/autoload/multimesh/line_simple_mm.gd" id="4_vr2v8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r22qa"]
 shading_mode = 0
