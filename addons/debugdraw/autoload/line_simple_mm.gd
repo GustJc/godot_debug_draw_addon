@@ -3,7 +3,8 @@ extends MultiMeshInstance3D
 var last_id : int = 0
 
 
-func _init() -> void:
+func _enter_tree() -> void:
+	multimesh.instance_count = DebugDraw.MAX_SHAPES_PER_TYPE
 	multimesh.mesh = ImmediateMesh.new()
 
 	var pointA = Vector3.ZERO

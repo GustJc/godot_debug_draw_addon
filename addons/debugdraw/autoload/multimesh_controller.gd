@@ -3,6 +3,10 @@ extends MultiMeshInstance3D
 var last_id : int = 0
 
 
+func _enter_tree() -> void:
+	multimesh.instance_count = DebugDraw.MAX_SHAPES_PER_TYPE
+
+
 func set_sphere(pos: Vector3, radius: float, color: Color, duration: float) -> void:
 	var id: int = last_id
 	last_id = (last_id+1) % multimesh.instance_count
