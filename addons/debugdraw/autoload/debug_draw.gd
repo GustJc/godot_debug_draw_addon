@@ -14,6 +14,7 @@ class_name CDebugDraw
 
 @onready var _draw_debug: MeshInstance3D = %DrawDebugMesh
 @onready var _draw_debug_strip: MeshInstance3D = %DrawDebugStrip
+@onready var _PHYSICS_TIME: float = ProjectSettings.get_setting("physics/common/physics_ticks_per_second") / 60.0
 @export var use_debug_draw: bool = true    ## Draw debug shapes. Disable this to not draw anything.
 @export var auto_clear_shapes: bool = true ## Auto clear quick draw shapes each frame
 

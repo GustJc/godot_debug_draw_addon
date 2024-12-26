@@ -73,7 +73,10 @@ func set_line(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color:
 
 	# Sphere mesh has radius 1. So scaling it equals effective radius
 	multimesh.set_instance_transform(id, l_transform)
-	await get_tree().create_timer(duration).timeout
+	if duration > DebugDraw._PHYSICS_TIME:
+		await get_tree().create_timer(duration).timeout
+	else:
+		await get_tree().physics_frame
 	remove_sphere(id)
 
 

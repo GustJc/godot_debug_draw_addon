@@ -2,17 +2,29 @@ extends Marker3D
 
 
 func _ready() -> void:
-	test_line()
+	#test_line()
 	#test_line_thick()
 	#test_hits()
 
 	#test_surf_tool()
-	#test_surf_tool_2()
-	#test_surf_tool_pointy_2()
+	#test_surf_tool_2_STRIP()
+	#test_surf_tool_pointy_2_STRIP()
 	#test_surf_tool_pointy()
+	test_zero_duration = true
 	pass
 
 #region mesh creation
+
+var test_zero_duration := false
+func _process(_delta: float) -> void:
+	if test_zero_duration:
+		var px = 0
+		var py = 3.5
+		var pz = 1
+		DebugDraw.draw_ray_thick(Vector3(px, py, pz), Vector3.UP, 0.0, 1.0, Color.REBECCA_PURPLE)
+		DebugDraw.draw_ray_thick(Vector3(px, py, pz), Vector3.LEFT, 0.0, 2.0, Color.GREEN)
+		DebugDraw.draw_ray_thick(Vector3(px, py, pz), Vector3(-1,1,0), 0.0, 3.0, Color.GREEN_YELLOW)
+
 
 func test_surf_tool_pointy() -> void:
 	var surface_tool = SurfaceTool.new()
@@ -53,7 +65,7 @@ func test_surf_tool_pointy() -> void:
 
 	%Mesh3D.mesh = mesh
 
-func test_surf_tool_pointy_2() -> void:
+func test_surf_tool_pointy_2_STRIP() -> void:
 	var surface_tool = SurfaceTool.new()
 
 	var pointA = Vector3.ZERO
@@ -93,7 +105,7 @@ func test_surf_tool_pointy_2() -> void:
 
 	%Mesh3D2.mesh = mesh
 
-func test_surf_tool_2() -> void:
+func test_surf_tool_2_STRIP() -> void:
 	var surface_tool = SurfaceTool.new()
 
 	var pointA = Vector3.ZERO
@@ -134,7 +146,6 @@ func test_surf_tool_2() -> void:
 	var mesh = surface_tool.commit()
 
 	%Mesh3D2.mesh = mesh
-
 
 func test_surf_tool() -> void:
 	var surface_tool = SurfaceTool.new()

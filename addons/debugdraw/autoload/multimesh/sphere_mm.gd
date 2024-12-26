@@ -15,7 +15,12 @@ func set_sphere(pos: Vector3, radius: float, color: Color, duration: float) -> v
 	multimesh.set_instance_color(id, color)
 	# Sphere mesh has radius 1. So scaling it equals effective radius
 	multimesh.set_instance_transform(id, Transform3D(Basis().scaled(Vector3.ONE*radius), pos))
-	await get_tree().create_timer(duration).timeout
+
+	if duration > DebugDraw._PHYSICS_TIME:
+		await get_tree().create_timer(duration).timeout
+	else:
+		await get_tree().physics_frame
+
 	remove_sphere(id)
 
 
