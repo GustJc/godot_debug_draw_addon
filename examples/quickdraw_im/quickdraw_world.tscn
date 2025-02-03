@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://d3ff3u427jd0u"]
+[gd_scene load_steps=7 format=3 uid="uid://m41rvocheeuk"]
 
-[ext_resource type="Script" path="res://examples/camera_3d.gd" id="1_b66qq"]
-[ext_resource type="Script" path="res://examples/marker_draw.gd" id="1_dmyyf"]
+[ext_resource type="Script" path="res://examples/camera_3d.gd" id="1_8dy10"]
+[ext_resource type="Script" path="res://examples/quickdraw_im/quickdraw_tests.gd" id="2_ogql0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_imyb7"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -16,8 +16,6 @@ sky = SubResource("Sky_41vkr")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="BoxMesh" id="BoxMesh_xfdt1"]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0syls"]
 albedo_color = Color(0.652344, 0.652344, 0.652344, 1)
 
@@ -31,34 +29,13 @@ transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 0.897166, 0.441693, 0, -0.441693, 0.897166, -2.38419e-07, 4.31447, 3.29514)
-script = ExtResource("1_b66qq")
+transform = Transform3D(1, 0, 0, 0, 0.897166, 0.441693, 0, -0.441693, 0.897166, -2.38419e-07, 2.18155, 2.66245)
+script = ExtResource("1_8dy10")
 move_speed = 0.1
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.41, 0, 0.5, -0.000784189)
-visible = false
-mesh = SubResource("BoxMesh_xfdt1")
-skeleton = NodePath("../Marker3D")
-
-[node name="Mesh3D" type="MeshInstance3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-skeleton = NodePath("../Marker3D")
-
-[node name="Mesh3D2" type="MeshInstance3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-skeleton = NodePath("../Marker3D")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 4, 1)
-mesh = SubResource("BoxMesh_xfdt1")
-skeleton = NodePath("../Marker3D")
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.536367, -1.44809)
-script = ExtResource("1_dmyyf")
+script = ExtResource("2_ogql0")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.226954, 0)

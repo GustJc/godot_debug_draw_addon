@@ -12,24 +12,22 @@ class_name CDebugDraw
 ## The second method uses an MultiMesh to draw shapes. eg: [method draw_ray].[br]
 ## These are drawn using a [code]duration[/code] and don't need to be called every frame.
 
-@onready var _draw_debug: MeshInstance3D = %DrawDebugMesh
-@onready var _draw_debug_strip: MeshInstance3D = %DrawDebugStrip
+@onready var _draw_debug_line: MeshInstance3D = %DrawDebugLine
+@onready var _draw_debug_tri: MeshInstance3D = %DrawDebugTriangle
 @onready var _PHYSICS_TIME: float = ProjectSettings.get_setting("physics/common/physics_ticks_per_second") / 60.0
 @export var use_debug_draw: bool = true    ## Draw debug shapes. Disable this to not draw anything.
 @export var auto_clear_shapes: bool = true ## Auto clear quick draw shapes each frame
 
 var _started_line_drawing := false
-var _started_strip_drawing := false
+var _started_triangle_drawing := false
 var MAX_SHAPES_PER_TYPE : int = 500
 
 
 func _process(delta: float) -> void:
 	if _started_line_drawing:
-		_draw_debug.mesh.surface_end()
-		_started_line_drawing = false
-	if _started_strip_drawing:
-		_draw_debug_strip.mesh.surface_end()
-		_started_strip_drawing = false
+		_stop_line_drawing()
+	if _started_triangle_drawing:
+		_stop_triangle_drawing()
 
 	await get_tree().physics_frame
 	if auto_clear_shapes:
@@ -95,11 +93,11 @@ func qdraw_line(pointA : Vector3, pointB : Vector3, color: Color = Color.BLACK):
 	if not use_debug_draw or pointA.is_equal_approx(pointB):
 		return
 
-	if _draw_debug.mesh is ImmediateMesh:
+	if _draw_debug_line.mesh is ImmediateMesh:
 		_start_line_drawing()
-		_draw_debug.mesh.surface_set_color(color)
-		_draw_debug.mesh.surface_add_vertex(pointA)
-		_draw_debug.mesh.surface_add_vertex(pointB)
+		_draw_debug_line.mesh.surface_set_color(color)
+		_draw_debug_line.mesh.surface_add_vertex(pointA)
+		_draw_debug_line.mesh.surface_add_vertex(pointB)
 
 
 ## Draw a line from [param pointA] to [param dir_len].[br]
@@ -112,14 +110,14 @@ func qdraw_line_relative(pointA : Vector3, dir_len : Vector3, color: Color = Col
 ## This needs to be called each frame as it is erased after the end of each frame.[br][br]
 ## Based on Raycast3D debug shape: [br]
 ## [url]https://github.com/godotengine/godot/blob/44e399ed5fa895f760b2995e59788bdb49782666/scene/3d/ray_cast_3d.cpp#L397C2-L408C3[/url]
-func qdraw_line_relative_thick(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color: Color = Color.BLACK):
+func qdraw_line_relative_thick(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color: Color = Color.BLACK, is_pointy: bool = false):
 	pointB = pointA+pointB
 
 	if not use_debug_draw or pointA.is_equal_approx(pointB):
 		return
-	if _draw_debug_strip.mesh is ImmediateMesh:
-		_start_strip_drawing()
-		_draw_debug_strip.mesh.surface_set_color(color)
+	if _draw_debug_tri.mesh is ImmediateMesh:
+		_start_triangle_drawing()
+		_draw_debug_tri.mesh.surface_set_color(color)
 #
 		var scale_factor := 100.0
 
@@ -132,69 +130,55 @@ func qdraw_line_relative_thick(pointA : Vector3, pointB : Vector3, thickness: fl
 			else Vector3(0, -dir.z, dir.y).normalized()
 		normal *= thickness / scale_factor
 
-		var vertices_strip_order = [4, 5, 0, 1, 2, 5, 6, 4, 7, 0, 3, 2, 7, 6]
+		var vertices_strip_order = [
+			0, 1, 2, 0, 2, 3,  # Back face
+			6, 5, 4, 7, 6, 4,  # Front face
+			0, 3, 7, 0, 7, 4,  # Left face
+			1, 5, 6, 1, 6, 2,  # Right face
+			3, 2, 6, 3, 6, 7,  # Top face
+			0, 4, 5, 0, 5, 1   # Bottom face
+		]
 		var localB = (pointB-pointA)
+		var pointy_factor: float = 3.0 if is_pointy else 1.0
 		# Calculates line mesh at origin
-		for v in range(14):
+		for v in range(36):
 			var vertex = normal if \
 				vertices_strip_order[v] < 4 else \
-				normal + localB
+				(normal / pointy_factor) + localB
 			var final_vert = vertex.rotated(dir,
 				PI * (0.5 * (vertices_strip_order[v] % 4) + 0.25))
 			# Offset to real position
 			final_vert += pointA
-			_draw_debug_strip.mesh.surface_add_vertex(final_vert)
-
+			_draw_debug_tri.mesh.surface_add_vertex(final_vert)
 
 
 ## Draw a pointy line from [param pointA] to [param dir_len].[br]
 ## This needs to be called each frame as it is erased after the end of each frame.[br]
 func qdraw_line_relative_thickpointy(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color: Color = Color.BLACK):
-	pointB = pointA+pointB
-
-	if not use_debug_draw or pointA.is_equal_approx(pointB):
-		#print("Same start/end line")
-		return
-	if _draw_debug_strip.mesh is ImmediateMesh:
-		_start_strip_drawing()
-		_draw_debug_strip.mesh.surface_set_color(color)
-#
-		var scale_factor := 100.0
-
-		var dir := pointA.direction_to(pointB)
-		var EPISILON = 0.00001
-
-		# Draw cube line
-		var normal := Vector3(-dir.y, dir.x, 0).normalized() \
-			if (abs(dir.x) + abs(dir.y) > EPISILON) \
-			else Vector3(0, -dir.z, dir.y).normalized()
-		normal *= thickness / scale_factor
-
-		var vertices_strip_order = [4, 5, 0, 1, 2, 5, 6, 4, 7, 0, 3, 2, 7, 6]
-		var localB = (pointB-pointA)
-		# Calculates line mesh at origin
-		for v in range(14):
-			var vertex = normal if \
-				vertices_strip_order[v] < 4 else \
-				normal /3.0 + localB
-			var final_vert = vertex.rotated(dir,
-				PI * (0.5 * (vertices_strip_order[v] % 4) + 0.25))
-			# Offset to real position
-			final_vert += pointA
-			_draw_debug_strip.mesh.surface_add_vertex(final_vert)
+	qdraw_line_relative_thick(pointA, pointB, thickness, color, true)
 #endregion draw lines
 
 
 func _start_line_drawing() -> void:
 	if not _started_line_drawing:
-		_draw_debug.mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+		_draw_debug_line.mesh.surface_begin(Mesh.PRIMITIVE_LINES)
 		_started_line_drawing = true
 
 
-func _start_strip_drawing() -> void:
-	if not _started_strip_drawing:
-		_draw_debug_strip.mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLE_STRIP)
-		_started_strip_drawing = true
+func _stop_line_drawing() -> void:
+	_draw_debug_line.mesh.surface_end()
+	_started_line_drawing = false
+
+
+func _start_triangle_drawing() -> void:
+	if not _started_line_drawing:
+		_draw_debug_tri.mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
+		_started_line_drawing = true
+
+
+func _stop_triangle_drawing() -> void:
+	_draw_debug_tri.mesh.surface_end()
+	_started_triangle_drawing = false
 
 
 ## Clear all surfaces from the ImmediateMesh debug mesh.
@@ -202,5 +186,7 @@ func _start_strip_drawing() -> void:
 ## This is auto-called every next physics frames.
 ## You only need to call this if you disable [member auto_clear_shapes]
 func qclear_all_shapes():
-	if _draw_debug.mesh is ImmediateMesh:
-		_draw_debug.mesh.clear_surfaces()
+	if _draw_debug_tri.mesh is ImmediateMesh:
+		_draw_debug_tri.mesh.clear_surfaces()
+	if _draw_debug_line.mesh is ImmediateMesh:
+		_draw_debug_line.mesh.clear_surfaces()

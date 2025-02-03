@@ -46,7 +46,7 @@ process_priority = 1000
 process_physics_priority = 1000
 script = ExtResource("1_47vo8")
 
-[node name="DrawDebugMesh" type="MeshInstance3D" parent="."]
+[node name="DrawDebugLine" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
 material_override = SubResource("StandardMaterial3D_r22qa")
 cast_shadow = 0
@@ -54,7 +54,7 @@ ignore_occlusion_culling = true
 gi_mode = 0
 mesh = SubResource("ImmediateMesh_nc8b3")
 
-[node name="DrawDebugStrip" type="MeshInstance3D" parent="."]
+[node name="DrawDebugTriangle" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
 material_override = SubResource("StandardMaterial3D_r22qa")
 cast_shadow = 0
