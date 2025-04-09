@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://d3ff3u427jd0u"]
 
-[ext_resource type="Script" path="res://examples/camera_3d.gd" id="1_b66qq"]
-[ext_resource type="Script" path="res://examples/debugdraw_mm/marker_draw.gd" id="1_dmyyf"]
+[ext_resource type="Script" uid="uid://dws1ehcl0lylu" path="res://examples/camera_3d.gd" id="1_b66qq"]
+[ext_resource type="Script" uid="uid://dbykptwhimdku" path="res://examples/debugdraw_mm/marker_draw.gd" id="1_dmyyf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_imyb7"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
