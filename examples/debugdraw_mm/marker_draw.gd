@@ -4,13 +4,13 @@ extends Marker3D
 func _ready() -> void:
 	#test_line()
 	#test_line_thick()
-	#test_hits()
+	test_hits()
 
 	#test_surf_tool()
 	#test_surf_tool_2_STRIP()
 	#test_surf_tool_pointy_2_STRIP()
 	#test_surf_tool_pointy()
-	test_zero_duration = true
+	#test_zero_duration = true
 	pass
 
 #region mesh creation
@@ -191,25 +191,25 @@ func test_hits() -> void:
 
 
 	DebugDraw.draw_hit_ray_thick(position+Vector3.RIGHT, Vector3.UP)
-	DebugDraw.draw_hit_ray_thick(position+Vector3.UP+Vector3.RIGHT, Vector3.RIGHT)
+	DebugDraw.draw_hit_ray_thick(position+Vector3.UP+Vector3.RIGHT, Vector3.RIGHT+Vector3.DOWN)
 
 func test_line() -> void:
 	var px = 0
 	var py = 3.5
 	var pz = 1
-	DebugDraw.draw_ray(Vector3(px, py, pz), Vector3.UP, 1.0, Color.REBECCA_PURPLE)
-	DebugDraw.draw_ray(Vector3(px, py, pz), Vector3.LEFT, 2.0, Color.GREEN)
-	DebugDraw.draw_ray(Vector3(px, py, pz), Vector3(-1,1,0), 3.0, Color.GREEN_YELLOW)
-
-	DebugDraw.draw_ray(Vector3(px  , py,   pz), Vector3(-1, 0 , 0), 0.5, Color.RED)
-	DebugDraw.draw_ray(Vector3(px-1, py,   pz), Vector3( 0, 1 , 0), 1.0, Color.RED)
-	DebugDraw.draw_ray(Vector3(px-1, py+1, pz), Vector3( 1, 0 , 0), 1.5, Color.RED)
-	DebugDraw.draw_ray(Vector3(px,   py+1, pz), Vector3( 0,-1 , 0), 2.0, Color.RED)
-	DebugDraw.draw_ray(Vector3(px,   py  , pz), Vector3( 1, 0 , 0), 2.5, Color.RED)
-	DebugDraw.draw_sphere_mm(Vector3(px,   py  , pz), 10.0, 0.1, Color.GREEN)
-	DebugDraw.draw_sphere_mm(Vector3(px-1,   py  , pz), 10.0, 0.1, Color.GREEN)
-	DebugDraw.draw_sphere_mm(Vector3(px-1,   py+1  , pz), 10.0, 0.1, Color.GREEN)
-	DebugDraw.draw_sphere_mm(Vector3(px,   py+1  , pz), 10.0, 0.1, Color.GREEN)
+	#DebugDraw.draw_ray(Vector3(px, py, pz), Vector3.UP, 1.0, Color.REBECCA_PURPLE)
+	#DebugDraw.draw_ray(Vector3(px, py, pz), Vector3.LEFT, 2.0, Color.GREEN)
+	#DebugDraw.draw_ray(Vector3(px, py, pz), Vector3(-1,1,0), 3.0, Color.GREEN_YELLOW)
+#
+	#DebugDraw.draw_ray(Vector3(px  , py,   pz), Vector3(-1, 0 , 0), 0.5, Color.RED)
+	#DebugDraw.draw_ray(Vector3(px-1, py,   pz), Vector3( 0, 1 , 0), 1.0, Color.RED)
+	#DebugDraw.draw_ray(Vector3(px-1, py+1, pz), Vector3( 1, 0 , 0), 1.5, Color.RED)
+	#DebugDraw.draw_ray(Vector3(px,   py+1, pz), Vector3( 0,-1 , 0), 2.0, Color.RED)
+	#DebugDraw.draw_ray(Vector3(px,   py  , pz), Vector3( 1, 0 , 0), 2.5, Color.RED)
+	DebugDraw.draw_sphere_mm(Vector3(px,   py  , pz), 1.0, 1.1, Color(Color.GREEN, 0.5))
+	DebugDraw.draw_sphere_mm(Vector3(px-1,   py  , pz), 1.0, 1.1, Color.GREEN)
+	DebugDraw.draw_sphere_mm(Vector3(px-1,   py+1  , pz), 1.0, 1.1, Color.GREEN)
+	DebugDraw.draw_sphere_mm(Vector3(px,   py+1  , pz), 1.0, 1.1, Color.GREEN)
 
 
 

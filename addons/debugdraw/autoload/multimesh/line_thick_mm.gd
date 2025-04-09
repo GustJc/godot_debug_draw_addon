@@ -1,9 +1,7 @@
-extends MultiMeshInstance3D
+extends BaseMultiMeshDebugDraw
 ## Create thick lines instances
 ##
 ## The created meshes lacks proper normals, to its meant to be used as unshaded.
-
-var last_id : int = 0
 
 
 func _enter_tree() -> void:
@@ -54,10 +52,7 @@ func set_line_relative(pointA : Vector3, dir_len : Vector3, thickness: float = 2
 
 
 func set_line(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color: Color = Color.RED, duration: float = 1.0):
-	var id: int = last_id
-	last_id = (last_id+1) % multimesh.instance_count
-	# Show the next instance
-	multimesh.visible_instance_count = min(multimesh.visible_instance_count+1, multimesh.instance_count)
+	var id: int = _get_available_id()
 	multimesh.set_instance_color(id, color)
 
 	var l_transform = Transform3D(Basis(), pointA)
@@ -77,9 +72,5 @@ func set_line(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color:
 		await get_tree().create_timer(duration).timeout
 	else:
 		await get_tree().physics_frame
-	remove_sphere(id)
 
-
-func remove_sphere(id: int) -> void:
-	multimesh.set_instance_color(id, Color.TRANSPARENT)
-	multimesh.set_instance_transform(id, Transform3D())
+	remove_instance(id)

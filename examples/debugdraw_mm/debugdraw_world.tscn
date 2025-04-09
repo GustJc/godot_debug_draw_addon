@@ -57,7 +57,7 @@ mesh = SubResource("BoxMesh_xfdt1")
 skeleton = NodePath("../Marker3D")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.536367, -1.44809)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.53637, 0.55191)
 script = ExtResource("1_dmyyf")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]

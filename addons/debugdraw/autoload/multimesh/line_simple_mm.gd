@@ -1,6 +1,4 @@
-extends MultiMeshInstance3D
-
-var last_id : int = 0
+extends BaseMultiMeshDebugDraw
 
 
 func _enter_tree() -> void:
@@ -29,10 +27,7 @@ func set_line_relative(pointA : Vector3, dir_len : Vector3, color: Color = Color
 
 
 func set_line(pointA : Vector3, pointB : Vector3, color: Color = Color.RED, duration: float = 1.0):
-	var id: int = last_id
-	last_id = (last_id+1) % multimesh.instance_count
-	# Show the next instance
-	multimesh.visible_instance_count = min(multimesh.visible_instance_count+1, multimesh.instance_count)
+	var id: int = _get_available_id()
 	multimesh.set_instance_color(id, color)
 
 	var l_transform = Transform3D(Basis(), pointA)
@@ -54,9 +49,4 @@ func set_line(pointA : Vector3, pointB : Vector3, color: Color = Color.RED, dura
 	else:
 		await get_tree().physics_frame
 
-	remove_line(id)
-
-
-func remove_line(id: int) -> void:
-	multimesh.set_instance_color(id, Color.TRANSPARENT)
-	multimesh.set_instance_transform(id, Transform3D())
+	remove_instance(id)

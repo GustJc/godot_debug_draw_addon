@@ -14,13 +14,13 @@ class_name CDebugDraw
 
 @onready var _draw_debug_line: MeshInstance3D = %DrawDebugLine
 @onready var _draw_debug_tri: MeshInstance3D = %DrawDebugTriangle
-@onready var _PHYSICS_TIME: float = ProjectSettings.get_setting("physics/common/physics_ticks_per_second") / 60.0
+@onready var _PHYSICS_TIME: float = ProjectSettings.get_setting("physics/common/physics_ticks_per_second") / 3600.0
 @export var use_debug_draw: bool = true    ## Draw debug shapes. Disable this to not draw anything.
 @export var auto_clear_shapes: bool = true ## Auto clear quick draw shapes each frame
 
 var _started_line_drawing := false
 var _started_triangle_drawing := false
-var MAX_SHAPES_PER_TYPE : int = 500
+var MAX_SHAPES_PER_TYPE : int = ProjectSettings.get_setting("debug_draw_addon/max_shapes_per_type", 100)
 
 
 func _process(delta: float) -> void:
@@ -29,7 +29,8 @@ func _process(delta: float) -> void:
 	if _started_triangle_drawing:
 		_stop_triangle_drawing()
 
-	await get_tree().physics_frame
+
+func _physics_process(delta: float) -> void:
 	if auto_clear_shapes:
 		qclear_all_shapes()
 
@@ -40,15 +41,15 @@ func draw_hit_ray(hit_pos: Vector3, hit_direction: Vector3, duration: float = 2.
 			hit_color: Color = Color(Color.RED, 0.8),
 			trail_color: Color = Color(Color.BLUE, 0.8)) -> void:
 	draw_sphere_mm(hit_pos, hit_radius, duration, hit_color)
-	draw_ray(hit_pos, hit_direction*trail_len, duration, trail_color)
+	draw_ray(hit_pos, -hit_direction*trail_len, duration, trail_color)
 
 
 func draw_hit_ray_thick(hit_pos: Vector3, hit_direction: Vector3, duration: float = 2.0,
 			hit_radius: float = 0.1, trail_len: float = 1.0, trail_thickness: float = 2.0,
-			hit_color: Color = Color(Color.RED, 0.8),
-			trail_color: Color = Color(Color.BLUE, 0.8) ) -> void:
+			hit_color: Color = Color(Color.RED, 1.0),
+			trail_color: Color = Color(Color.BLUE, 1.0) ) -> void:
 	draw_sphere_mm(hit_pos, hit_radius, duration, hit_color)
-	draw_ray_thick(hit_pos, hit_direction*trail_len, duration, trail_thickness, trail_color)
+	draw_ray_thick(hit_pos, -hit_direction*trail_len, duration, trail_thickness, trail_color)
 #endregion END MultiMesh Macro Functions
 
 

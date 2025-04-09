@@ -14,8 +14,8 @@ vertex_color_use_as_albedo = true
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_nc8b3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1djjg"]
-transparency = 1
-depth_draw_mode = 1
+transparency = 4
+shading_mode = 0
 vertex_color_use_as_albedo = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_3kjjm"]
