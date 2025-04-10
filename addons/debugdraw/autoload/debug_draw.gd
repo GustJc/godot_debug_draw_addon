@@ -54,6 +54,52 @@ func draw_hit_ray_thick(hit_pos: Vector3, hit_direction: Vector3, duration: floa
 			trail_color: Color = Color(Color.BLUE, 1.0) ) -> void:
 	draw_sphere(hit_pos, hit_radius, hit_color, duration)
 	draw_ray_thick(hit_pos, -hit_direction*trail_len, trail_thickness, trail_color, duration)
+
+
+func draw_arrow(start_pos: Vector3, end_pos: Vector3,
+			thickness: float = 1.0, arrow_len: float = 0.5,
+			color: Color = Color.BLUE, color_point: Color = Color.BLUE,
+			duration: float = 0,
+			flip_two_arrows: bool = false, draw_four_arrows: bool = false) -> void:
+	draw_line_thick(start_pos, end_pos, thickness, color, duration)
+
+	#arrow lines
+	var direction = (end_pos - start_pos).normalized()
+	var up_vector = Vector3.UP
+	if abs(direction.dot(Vector3.UP)) > 0.99: # Check if direction is almost parallel to UP
+		up_vector = Vector3.RIGHT
+	var right_vector = direction.cross(up_vector).normalized()
+
+	var tip_pos = end_pos
+	var arrow_length = arrow_len # Adjust this value for the arrowhead length
+	var arrow_width = arrow_len  # Adjust this value for the arrowhead width
+
+	# Only draw two arrows
+	if not draw_four_arrows:
+		if flip_two_arrows:
+			var rotation_angle = PI / 2.0
+			var rotation_basis = Basis(direction, rotation_angle)
+			right_vector = rotation_basis * right_vector # Using the multiplication operator for transformation
+
+	var base_point_1 = end_pos - direction * arrow_length + right_vector * (arrow_width / 2.0)
+	var base_point_2 = end_pos - direction * arrow_length - right_vector * (arrow_width / 2.0)
+
+	draw_line_thick(tip_pos, base_point_1, thickness, color_point, duration)
+	draw_line_thick(tip_pos, base_point_2, thickness, color_point, duration)
+
+	if not draw_four_arrows:
+		return
+
+	var rotation_angle = PI / 2.0
+	var rotation_basis = Basis(direction, rotation_angle)
+	var rotated_right_vector = rotation_basis * right_vector # Using the multiplication operator for transformation
+
+	base_point_1 = end_pos - direction * arrow_length + rotated_right_vector * (arrow_width / 2.0)
+	base_point_2 = end_pos - direction * arrow_length - rotated_right_vector * (arrow_width / 2.0)
+
+	draw_line_thick(tip_pos, base_point_1, thickness, color_point, duration)
+	draw_line_thick(tip_pos, base_point_2, thickness, color_point, duration)
+
 #endregion END MultiMesh Macro Functions
 
 
@@ -195,3 +241,17 @@ func qclear_all_shapes():
 	if _draw_debug_line.mesh is ImmediateMesh:
 		_draw_debug_line.mesh.clear_surfaces()
 #endregion end Quick Draw Functions
+
+
+func print_debug_info():
+	print_rich("[color=red][b]・▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖▖・[/b][/color]")
+	print("Visible instance count of multimesh, counts transparent ('erased') meshes.")
+	print_rich("[b]Thick lines:[/b]")
+	print("Visible instance count: ",%LineThickMM.multimesh.visible_instance_count)
+
+	print_rich("[b]Line:[/b]")
+	print("Visible instance count: ",%LineSimpleMM.multimesh.visible_instance_count)
+
+	print_rich("[b]Spheres:[/b]")
+	print("Visible instance count: ",%SphereMM.multimesh.visible_instance_count)
+	print("\n")

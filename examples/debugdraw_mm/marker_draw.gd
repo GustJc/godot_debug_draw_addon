@@ -3,8 +3,9 @@ extends Marker3D
 
 func _ready() -> void:
 	#test_line()
-	test_line_thick()
+	#test_line_thick()
 	#test_hits()
+	test_draw_arrow()
 
 	#test_surf_tool()
 	#test_surf_tool_2_STRIP()
@@ -13,7 +14,12 @@ func _ready() -> void:
 	#test_zero_duration = true
 	pass
 
-#region mesh creation
+func test_draw_arrow() -> void:
+	DebugDraw.print_debug_info()
+	DebugDraw.draw_arrow(position, position+Vector3.RIGHT, 1, 0.25, Color.BLUE, Color.BLUE, 5.0)
+	DebugDraw.draw_arrow(position, position+Vector3.UP, 1, 0.25, Color.BLUE, Color.BLUE, 5.0)
+	DebugDraw.print_debug_info()
+	pass
 
 var test_zero_duration := false
 func _process(_delta: float) -> void:
@@ -25,6 +31,79 @@ func _process(_delta: float) -> void:
 		DebugDraw.draw_ray_thick(Vector3(px, py, pz), Vector3.LEFT, 0.0, Color.GREEN, 2.0)
 		DebugDraw.draw_ray_thick(Vector3(px, py, pz), Vector3(-1,1,0), 0.0, Color.GREEN_YELLOW, 3.0)
 
+
+func test_hits() -> void:
+	DebugDraw.draw_hit_ray(position, Vector3.UP)
+	DebugDraw.draw_hit_ray(position+Vector3.UP, Vector3.UP)
+
+
+	DebugDraw.draw_hit_ray_thick(position+Vector3.RIGHT, Vector3.UP)
+	DebugDraw.draw_hit_ray_thick(position+Vector3.UP+Vector3.RIGHT, Vector3.RIGHT+Vector3.DOWN)
+
+func test_line() -> void:
+	var px = 0
+	var py = 3.5
+	var pz = 1
+	#DebugDraw.draw_ray(Vector3(px, py, pz), Vector3.UP, 1.0, Color.REBECCA_PURPLE)
+	#DebugDraw.draw_ray(Vector3(px, py, pz), Vector3.LEFT, 2.0, Color.GREEN)
+	#DebugDraw.draw_ray(Vector3(px, py, pz), Vector3(-1,1,0), 3.0, Color.GREEN_YELLOW)
+#
+	#DebugDraw.draw_ray(Vector3(px  , py,   pz), Vector3(-1, 0 , 0), 0.5, Color.RED)
+	#DebugDraw.draw_ray(Vector3(px-1, py,   pz), Vector3( 0, 1 , 0), 1.0, Color.RED)
+	#DebugDraw.draw_ray(Vector3(px-1, py+1, pz), Vector3( 1, 0 , 0), 1.5, Color.RED)
+	#DebugDraw.draw_ray(Vector3(px,   py+1, pz), Vector3( 0,-1 , 0), 2.0, Color.RED)
+	#DebugDraw.draw_ray(Vector3(px,   py  , pz), Vector3( 1, 0 , 0), 2.5, Color.RED)
+	DebugDraw.draw_sphere_mm(Vector3(px,   py  , pz), 1.0, 1.1, Color(Color.GREEN, 0.5))
+	DebugDraw.draw_sphere_mm(Vector3(px-1,   py  , pz), 1.0, 1.1, Color.GREEN)
+	DebugDraw.draw_sphere_mm(Vector3(px-1,   py+1  , pz), 1.0, 1.1, Color.GREEN)
+	DebugDraw.draw_sphere_mm(Vector3(px,   py+1  , pz), 1.0, 1.1, Color.GREEN)
+
+
+
+
+func test_line_thick() -> void:
+	var px = 0
+	var py = 3.5
+	var pz = 1
+	DebugDraw.draw_ray_thick(Vector3(px, py, pz), Vector3.UP, 5.0, Color.REBECCA_PURPLE, 1.0)
+	DebugDraw.draw_ray_thick(Vector3(px, py, pz), Vector3.LEFT, 3.0, Color.GREEN, 2.0)
+	DebugDraw.draw_ray_thick(Vector3(px, py, pz), Vector3(-1,1,0), 3.0, Color.GREEN_YELLOW, 3.0)
+
+	await get_tree().create_timer(3.0).timeout
+	var fac = 5.0
+	DebugDraw.draw_ray_thick(Vector3(px  , py,   pz), Vector3(-1, 0 , 0), 0.5*fac, Color.RED, 2.0)
+	DebugDraw.draw_ray_thick(Vector3(px-1, py,   pz), Vector3( 0, 1 , 0), 1.0*fac, Color.RED, 2.0)
+	DebugDraw.draw_ray_thick(Vector3(px-1, py+1, pz), Vector3( 1, 0 , 0), 1.5*fac, Color.RED, 2.0)
+	DebugDraw.draw_ray_thick(Vector3(px,   py+1, pz), Vector3( 0,-1 , 0), 2.0*fac, Color.RED, 2.0)
+	DebugDraw.draw_ray_thick(Vector3(px,   py  , pz), Vector3( 1, 0 , 0), 2.5*fac, Color.RED, 2.0)
+
+	await get_tree().create_timer(1.0).timeout
+	var mat := DebugDraw.line_thick_mm.multimesh.mesh.surface_get_material(0)
+	mat.shading_mode = mat.SHADING_MODE_PER_PIXEL
+
+	await get_tree().create_timer(2.0).timeout
+
+	DebugDraw.draw_ray_thick(Vector3(px+0.1,   py+1, pz), Vector3( 0,-1 , 0), 2.0*fac, Color.RED, 3.0)
+	DebugDraw.draw_ray_thick(Vector3(px-0.1,   py+1, pz), Vector3( 0,-1 , 0), 2.0*fac, Color.RED, 3.0)
+
+
+func test_sphere() -> void:
+	DebugDraw.draw_sphere(position, 1.0, Color.GREEN, 10.0)
+	position.x += 1
+	DebugDraw.draw_sphere(position, 1.0, Color(Color.RED, 0.85), 10.0)
+	position.x += 1
+	position.z += 1
+	DebugDraw.draw_sphere(position, 1.0, Color.GREEN, 10.0)
+	position.x += 1
+	DebugDraw.draw_sphere(position, 1.0, Color.BLUE, 10.0)
+
+
+func _physics_process(_delta: float) -> void:
+	pass
+	#for i in 300:
+		#DebugDraw.draw_line_relative(position+Vector3(-2+i*0.1,0,0), Vector3.UP*5, Color.BLACK)
+
+#region mesh creation
 
 func test_surf_tool_pointy() -> void:
 	var surface_tool = SurfaceTool.new()
@@ -184,74 +263,3 @@ func test_surf_tool() -> void:
 	%Mesh3D.mesh = mesh
 
 #endregion
-
-func test_hits() -> void:
-	DebugDraw.draw_hit_ray(position, Vector3.UP)
-	DebugDraw.draw_hit_ray(position+Vector3.UP, Vector3.UP)
-
-
-	DebugDraw.draw_hit_ray_thick(position+Vector3.RIGHT, Vector3.UP)
-	DebugDraw.draw_hit_ray_thick(position+Vector3.UP+Vector3.RIGHT, Vector3.RIGHT+Vector3.DOWN)
-
-func test_line() -> void:
-	var px = 0
-	var py = 3.5
-	var pz = 1
-	#DebugDraw.draw_ray(Vector3(px, py, pz), Vector3.UP, 1.0, Color.REBECCA_PURPLE)
-	#DebugDraw.draw_ray(Vector3(px, py, pz), Vector3.LEFT, 2.0, Color.GREEN)
-	#DebugDraw.draw_ray(Vector3(px, py, pz), Vector3(-1,1,0), 3.0, Color.GREEN_YELLOW)
-#
-	#DebugDraw.draw_ray(Vector3(px  , py,   pz), Vector3(-1, 0 , 0), 0.5, Color.RED)
-	#DebugDraw.draw_ray(Vector3(px-1, py,   pz), Vector3( 0, 1 , 0), 1.0, Color.RED)
-	#DebugDraw.draw_ray(Vector3(px-1, py+1, pz), Vector3( 1, 0 , 0), 1.5, Color.RED)
-	#DebugDraw.draw_ray(Vector3(px,   py+1, pz), Vector3( 0,-1 , 0), 2.0, Color.RED)
-	#DebugDraw.draw_ray(Vector3(px,   py  , pz), Vector3( 1, 0 , 0), 2.5, Color.RED)
-	DebugDraw.draw_sphere_mm(Vector3(px,   py  , pz), 1.0, 1.1, Color(Color.GREEN, 0.5))
-	DebugDraw.draw_sphere_mm(Vector3(px-1,   py  , pz), 1.0, 1.1, Color.GREEN)
-	DebugDraw.draw_sphere_mm(Vector3(px-1,   py+1  , pz), 1.0, 1.1, Color.GREEN)
-	DebugDraw.draw_sphere_mm(Vector3(px,   py+1  , pz), 1.0, 1.1, Color.GREEN)
-
-
-
-
-func test_line_thick() -> void:
-	var px = 0
-	var py = 3.5
-	var pz = 1
-	DebugDraw.draw_ray_thick(Vector3(px, py, pz), Vector3.UP, 5.0, Color.REBECCA_PURPLE, 1.0)
-	DebugDraw.draw_ray_thick(Vector3(px, py, pz), Vector3.LEFT, 3.0, Color.GREEN, 2.0)
-	DebugDraw.draw_ray_thick(Vector3(px, py, pz), Vector3(-1,1,0), 3.0, Color.GREEN_YELLOW, 3.0)
-
-	await get_tree().create_timer(3.0).timeout
-	var fac = 5.0
-	DebugDraw.draw_ray_thick(Vector3(px  , py,   pz), Vector3(-1, 0 , 0), 0.5*fac, Color.RED, 2.0)
-	DebugDraw.draw_ray_thick(Vector3(px-1, py,   pz), Vector3( 0, 1 , 0), 1.0*fac, Color.RED, 2.0)
-	DebugDraw.draw_ray_thick(Vector3(px-1, py+1, pz), Vector3( 1, 0 , 0), 1.5*fac, Color.RED, 2.0)
-	DebugDraw.draw_ray_thick(Vector3(px,   py+1, pz), Vector3( 0,-1 , 0), 2.0*fac, Color.RED, 2.0)
-	DebugDraw.draw_ray_thick(Vector3(px,   py  , pz), Vector3( 1, 0 , 0), 2.5*fac, Color.RED, 2.0)
-
-	await get_tree().create_timer(1.0).timeout
-	var mat := DebugDraw.line_thick_mm.multimesh.mesh.surface_get_material(0)
-	mat.shading_mode = mat.SHADING_MODE_PER_PIXEL
-
-	await get_tree().create_timer(2.0).timeout
-
-	DebugDraw.draw_ray_thick(Vector3(px+0.1,   py+1, pz), Vector3( 0,-1 , 0), 2.0*fac, Color.RED, 3.0)
-	DebugDraw.draw_ray_thick(Vector3(px-0.1,   py+1, pz), Vector3( 0,-1 , 0), 2.0*fac, Color.RED, 3.0)
-
-
-func test_sphere() -> void:
-	DebugDraw.draw_sphere(position, 1.0, Color.GREEN, 10.0)
-	position.x += 1
-	DebugDraw.draw_sphere(position, 1.0, Color(Color.RED, 0.85), 10.0)
-	position.x += 1
-	position.z += 1
-	DebugDraw.draw_sphere(position, 1.0, Color.GREEN, 10.0)
-	position.x += 1
-	DebugDraw.draw_sphere(position, 1.0, Color.BLUE, 10.0)
-
-
-func _physics_process(_delta: float) -> void:
-	pass
-	#for i in 300:
-		#DebugDraw.draw_line_relative(position+Vector3(-2+i*0.1,0,0), Vector3.UP*5, Color.BLACK)
