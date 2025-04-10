@@ -3,38 +3,40 @@
 
 This is a simple debug draw addon for 3D shapes.
 
-It's an easy way to call debug draw functions to help test your code.
+Its a gdscript addon that is easy to use and call debug draw functions to help test your code.
 
-There is no need to call the draw function every frame, you only need to call it once, and specify a duration for the shape.
+Shapes drawn can be called every frame, or only once if a duration is passed.
 
-It uses a `MultiMesh` to instanciate each type of 3D shape.
+This uses a `MultiMesh` to instanciate each type of 3D shape.
+So it should be able to support a lot of shapes at the same time.
+The downside is that it can't cull unseen shapes.
+Not sure if this was the right approach, but it shouldn't affect the game performance in any meaningful way.
 
 There is also an alternate method of drawing with `ImmediateMesh` where the shapes are drawn and cleared each frames. \
 Those draws functions are noted the letter `q`. eg: `qdraw_line()`
 
 This addon will add an autoload to control and show the debug shapes.
-You can access it by calling `DebugDraw`
+You can access it by calling `DebugDraw`.
 
 Work to do
 -------------------
-I'm still setting up this addon. Some things might change.\
 As of now, each new shape added needs a new MultiMesh node.\
 Each with `DebugDraw.MAX_SHAPES_PER_TYPE` instances. \
+This config will be a project setting in the future.
+
+The multimesh re-uses previously _freed_ instances but it doesn't renew the max `visible_instance_count`.
 
 The `examples` folder right now is just temporary testing. \
 I'll replace it with proper examples after the basic work is done
 
-Todo: \
-Use SurfaceTool to create the meshs for multimesh.
-The mesh created right now doesn't have proper normals. So trying to draw them with light doesn't work well. Which is why the thick line's are drawn with `SHADING_MODE_UNSHADED` only for now.
-
-Future shapes to be added
 
 Shapes to add:
-- Pointy line
+- Pointy line/arrows
 - Box shape
 - Wireframe shapes (using shader)
 - Label3D (not multimesh, but using a pool as needed)
+
+I might abandon the multimesh approach and just use normal instancing for extra shapes.
 
 Install
 -------------------
@@ -47,23 +49,23 @@ Usable Functions
 
 ```gdscript
 ## Draw a line
-func draw_line(pointA : Vector3, pointB : Vector3, duration: float = 2.0, color: Color = Color.RED):
+func draw_line(pointA : Vector3, pointB : Vector3, color: Color = Color.RED, duration: float = 0.0):
 ```
 
 ```gdscript
 ## Draw a thick line.
-func draw_line_thick(pointA : Vector3, pointB : Vector3, duration: float = 2.0, thickness: float = 2.0, color: Color = Color.BLACK):
+func draw_line_thick(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color: Color = Color.BLACK, duration: float = 0.0):
 ```
 
 ```gdscript
 ## Draw a ray. Its a line where you pass its position and direction.
-func draw_ray(pointA : Vector3, dir_len : Vector3, duration: float = 2.0, color: Color = Color.RED):
+func draw_ray(pointA : Vector3, dir_len : Vector3, color: Color = Color.RED, duration: float = 0.0):
 ```
 
 
 ```gdscript
 ## Draw a ray with a thick line.
-func draw_ray_thick(pointA : Vector3, dir_len : Vector3, duration: float = 2.0, thickness: float = 2.0, color: Color = Color.BLACK):
+func draw_ray_thick(pointA : Vector3, dir_len : Vector3, thickness: float = 2.0, color: Color = Color.BLACK, duration: float = 0.0):
 ```
 
 ### Shapes
@@ -71,7 +73,7 @@ func draw_ray_thick(pointA : Vector3, dir_len : Vector3, duration: float = 2.0, 
 
 ```gdscript
 ## Draw a sphere.
-func draw_sphere_mm(pos: Vector3, radius: float, duration: float = 0.1, color: Color = Color(Color.RED, 0.85)):
+func draw_sphere_mm(pos: Vector3, radius: float, color: Color = Color(Color.RED, 0.85), duration: float = 0.0):
 ```
 
 ### Special shapes
@@ -127,7 +129,7 @@ func _on_hit(hit_pos: Vector3) -> void:
     var radius := 0.5   # Creates a sphre of radius 0.5
     var duration := 1.0 # Will display debug shape for 1s
 
-    DebugDraw.draw_sphere_mm(hit_pos, radius, duration)
+    DebugDraw.draw_sphere(hit_pos, radius, duration)
 ```
 
 Usage for quick draws

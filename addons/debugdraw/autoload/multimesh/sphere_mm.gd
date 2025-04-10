@@ -14,6 +14,6 @@ func set_sphere(pos: Vector3, radius: float, color: Color, duration: float) -> v
 	if duration > DebugDraw._PHYSICS_TIME:
 		await get_tree().create_timer(duration).timeout
 	else:
-		await get_tree().physics_frame
+		await get_tree().process_frame
 
 	remove_instance(id)

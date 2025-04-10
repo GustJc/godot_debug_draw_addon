@@ -14,13 +14,17 @@ class_name CDebugDraw
 
 @onready var _draw_debug_line: MeshInstance3D = %DrawDebugLine
 @onready var _draw_debug_tri: MeshInstance3D = %DrawDebugTriangle
+@onready var sphere_mm: MultiMeshInstance3D = %SphereMM
+@onready var line_thick_mm: MultiMeshInstance3D = %LineThickMM
+@onready var line_simple_mm: MultiMeshInstance3D = %LineSimpleMM
+
 @onready var _PHYSICS_TIME: float = ProjectSettings.get_setting("physics/common/physics_ticks_per_second") / 3600.0
 @export var use_debug_draw: bool = true    ## Draw debug shapes. Disable this to not draw anything.
 @export var auto_clear_shapes: bool = true ## Auto clear quick draw shapes each frame
 
 var _started_line_drawing := false
 var _started_triangle_drawing := false
-var MAX_SHAPES_PER_TYPE : int = ProjectSettings.get_setting("debug_draw_addon/max_shapes_per_type", 100)
+var MAX_SHAPES_PER_TYPE : int = ProjectSettings.get_setting("debug_draw_addon/max_shapes_per_type", 200)
 
 
 func _process(delta: float) -> void:
@@ -40,47 +44,47 @@ func draw_hit_ray(hit_pos: Vector3, hit_direction: Vector3, duration: float = 2.
 			hit_radius: float = 0.05, trail_len: float = 0.5,
 			hit_color: Color = Color(Color.RED, 0.8),
 			trail_color: Color = Color(Color.BLUE, 0.8)) -> void:
-	draw_sphere_mm(hit_pos, hit_radius, duration, hit_color)
-	draw_ray(hit_pos, -hit_direction*trail_len, duration, trail_color)
+	draw_sphere(hit_pos, hit_radius, hit_color, duration)
+	draw_ray(hit_pos, -hit_direction*trail_len, trail_color, duration)
 
 
 func draw_hit_ray_thick(hit_pos: Vector3, hit_direction: Vector3, duration: float = 2.0,
 			hit_radius: float = 0.1, trail_len: float = 1.0, trail_thickness: float = 2.0,
 			hit_color: Color = Color(Color.RED, 1.0),
 			trail_color: Color = Color(Color.BLUE, 1.0) ) -> void:
-	draw_sphere_mm(hit_pos, hit_radius, duration, hit_color)
-	draw_ray_thick(hit_pos, -hit_direction*trail_len, duration, trail_thickness, trail_color)
+	draw_sphere(hit_pos, hit_radius, hit_color, duration)
+	draw_ray_thick(hit_pos, -hit_direction*trail_len, trail_thickness, trail_color, duration)
 #endregion END MultiMesh Macro Functions
 
 
 #region MultiMesh Functions
 ## Draw a line from [param pointA] with direction and length [param dir_len].
 ## Uses a MultiMesh for drawing.
-func draw_ray(pointA : Vector3, dir_len : Vector3, duration: float = 2.0, color: Color = Color.RED):
+func draw_ray(pointA : Vector3, dir_len : Vector3, color: Color = Color.RED, duration: float = 0.0):
 	%LineSimpleMM.set_line_relative(pointA, dir_len, color, duration)
 
 
 ## Draw a line from [param pointA] to [param pointB].
 ## Uses a MultiMesh for drawing.
-func draw_line(pointA : Vector3, pointB : Vector3, duration: float = 2.0, color: Color = Color.RED):
+func draw_line(pointA : Vector3, pointB : Vector3, color: Color = Color.RED, duration: float = 0.0):
 	%LineSimpleMM.set_line(pointA, pointB, color, duration)
 
 
 ## Draw a thick line from [param pointA] with direction and length [param dir_len].
 ## Uses a MultiMesh for drawing.
-func draw_ray_thick(pointA : Vector3, dir_len : Vector3, duration: float = 2.0, thickness: float = 2.0, color: Color = Color.BLACK):
+func draw_ray_thick(pointA : Vector3, dir_len : Vector3, thickness: float = 2.0, color: Color = Color.BLACK, duration: float = 0.0):
 	%LineThickMM.set_line_relative(pointA, dir_len, thickness, color, duration)
 
 
 ## Draw a thick line from [param pointA] with direction and length [param dir_len].
 ## Uses a MultiMesh for drawing.
-func draw_line_thick(pointA : Vector3, pointB : Vector3, duration: float = 2.0, thickness: float = 2.0, color: Color = Color.BLACK):
+func draw_line_thick(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color: Color = Color.BLACK, duration: float = 0.0):
 	%LineThickMM.set_line(pointA, pointB, thickness, color, duration)
 
 
 ## Draw a sphere. The sphere stays visible for [param duration] seconds.
 ## Uses a MultiMesh for drawing.
-func draw_sphere_mm(pos: Vector3, radius: float, duration: float = 0.1, color: Color = Color(Color.RED, 0.85)) -> void:
+func draw_sphere(pos: Vector3, radius: float, color: Color = Color(Color.RED, 0.85), duration: float = 0.0) -> void:
 	%SphereMM.set_sphere(pos, radius, color, duration)
 
 
@@ -157,7 +161,6 @@ func qdraw_line_relative_thick(pointA : Vector3, pointB : Vector3, thickness: fl
 ## This needs to be called each frame as it is erased after the end of each frame.[br]
 func qdraw_line_relative_thickpointy(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color: Color = Color.BLACK):
 	qdraw_line_relative_thick(pointA, pointB, thickness, color, true)
-#endregion draw lines
 
 
 func _start_line_drawing() -> void:
@@ -191,3 +194,4 @@ func qclear_all_shapes():
 		_draw_debug_tri.mesh.clear_surfaces()
 	if _draw_debug_line.mesh is ImmediateMesh:
 		_draw_debug_line.mesh.clear_surfaces()
+#endregion end Quick Draw Functions

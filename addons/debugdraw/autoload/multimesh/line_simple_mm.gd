@@ -47,6 +47,6 @@ func set_line(pointA : Vector3, pointB : Vector3, color: Color = Color.RED, dura
 	if duration > DebugDraw._PHYSICS_TIME:
 		await get_tree().create_timer(duration).timeout
 	else:
-		await get_tree().physics_frame
+		await get_tree().process_frame
 
 	remove_instance(id)
