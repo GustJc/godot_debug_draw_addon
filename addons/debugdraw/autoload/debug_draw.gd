@@ -56,6 +56,15 @@ func draw_hit_ray_thick(hit_pos: Vector3, hit_direction: Vector3, duration: floa
 	draw_ray_thick(hit_pos, -hit_direction*trail_len, trail_thickness, trail_color, duration)
 
 
+func draw_arrow_ray(start_pos: Vector3, direction: Vector3,
+			thickness: float = 1.0, arrow_len: float = 0.5,
+			color: Color = Color.BLUE, color_point: Color = Color.BLUE,
+			duration: float = 0,
+			flip_two_arrows: bool = false, draw_four_arrows: bool = false) -> void:
+	draw_arrow(start_pos, start_pos + direction, thickness, arrow_len, color, color_point,
+		duration, flip_two_arrows, draw_four_arrows)
+
+
 func draw_arrow(start_pos: Vector3, end_pos: Vector3,
 			thickness: float = 1.0, arrow_len: float = 0.5,
 			color: Color = Color.BLUE, color_point: Color = Color.BLUE,

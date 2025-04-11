@@ -16,10 +16,12 @@ var motion := Vector3()
 var velocity := Vector3()
 
 @export var is_active := true
+@export var start_enabled := false
 
 func _ready() -> void:
-	if is_active:
+	if start_enabled:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
 
 func _input(event: InputEvent) -> void:
 

@@ -15,6 +15,10 @@ func _get_available_id() -> int:
 	if last_id+1 > multimesh.visible_instance_count:
 		multimesh.visible_instance_count = min(last_id+1, multimesh.instance_count)
 
+	if last_id >= multimesh.instance_count:
+		print_rich("[color=orange] No more instances left %d. [/color]" % last_id)
+		return -1
+
 	return last_id
 
 
