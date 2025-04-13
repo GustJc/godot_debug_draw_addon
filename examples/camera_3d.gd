@@ -41,23 +41,22 @@ func _input(event: InputEvent) -> void:
 		# Vertical mouse look, clamped to -90..90 degrees.
 		rotation.x = clamp(rotation.x - event.relative.y * MOUSE_SENSITIVITY, deg_to_rad(-90), deg_to_rad(90))
 
-
+	if Input.is_key_pressed(KEY_1):
+		Engine.time_scale = 1
+	elif Input.is_key_pressed(KEY_2):
+		Engine.time_scale = 0.5
+	elif Input.is_key_pressed(KEY_3):
+		Engine.time_scale = 0.25
+	elif Input.is_key_pressed(KEY_4):
+		Engine.time_scale = 0.1
+#
+	if Input.is_physical_key_pressed(KEY_EQUAL):
+		move_speed = min(1.5, move_speed + 0.1)
+	if Input.is_physical_key_pressed(KEY_MINUS):
+		move_speed = max(0.1, move_speed - 0.1)
 
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
-	#if event.is_action_pressed("time_scale_1"):
-		#Engine.time_scale = 1
-	#elif event.is_action_pressed("time_scale_0.5"):
-		#Engine.time_scale = 0.5
-	#elif event.is_action_pressed("time_scale_0.2"):
-		#Engine.time_scale = 0.2
-#
-	#if event.is_action_pressed("movement_speed_increase"):
-		#move_speed = min(1.5, move_speed + 0.1)
-#
-	#if event.is_action_pressed("movement_speed_decrease"):
-		#move_speed = max(0.1, move_speed - 0.1)
-
 
 func _process(delta: float) -> void:
 	if not is_active: return

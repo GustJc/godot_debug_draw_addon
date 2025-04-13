@@ -24,7 +24,9 @@ class_name CDebugDraw
 
 var _started_line_drawing := false
 var _started_triangle_drawing := false
-var MAX_SHAPES_PER_TYPE : int = ProjectSettings.get_setting("debug_draw_addon/max_shapes_per_type", 200)
+var MAX_SHAPES_SPHERE_TYPE : int = ProjectSettings.get_setting("debug_draw_addon/max_shapes_sphere_type", 50)
+var MAX_SHAPES_LINE_TYPE : int = ProjectSettings.get_setting("debug_draw_addon/max_shapes_line_type", 50)
+var MAX_SHAPES_LINE_THICK_TYPE : int = ProjectSettings.get_setting("debug_draw_addon/max_shapes_line_thick_type", 200)
 
 
 func _process(delta: float) -> void:

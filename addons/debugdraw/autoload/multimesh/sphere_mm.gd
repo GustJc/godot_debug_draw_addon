@@ -2,7 +2,7 @@ extends BaseMultiMeshDebugDraw
 
 
 func _enter_tree() -> void:
-	multimesh.instance_count = DebugDraw.MAX_SHAPES_PER_TYPE
+	multimesh.instance_count = DebugDraw.MAX_SHAPES_SPHERE_TYPE
 
 
 func set_sphere(pos: Vector3, radius: float, color: Color, duration: float) -> void:

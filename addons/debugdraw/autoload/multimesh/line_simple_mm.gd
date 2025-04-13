@@ -2,7 +2,7 @@ extends BaseMultiMeshDebugDraw
 
 
 func _enter_tree() -> void:
-	multimesh.instance_count = DebugDraw.MAX_SHAPES_PER_TYPE
+	multimesh.instance_count = DebugDraw.MAX_SHAPES_LINE_TYPE
 	multimesh.mesh = ImmediateMesh.new()
 
 	var pointA = Vector3.ZERO
