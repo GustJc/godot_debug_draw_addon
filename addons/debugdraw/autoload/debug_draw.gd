@@ -95,8 +95,10 @@ func draw_arrow(start_pos: Vector3, end_pos: Vector3,
 	var base_point_1 = end_pos - direction * arrow_length + right_vector * (arrow_width / 2.0)
 	var base_point_2 = end_pos - direction * arrow_length - right_vector * (arrow_width / 2.0)
 
-	draw_line_thick(tip_pos, base_point_1, thickness, color_point, duration)
-	draw_line_thick(tip_pos, base_point_2, thickness, color_point, duration)
+	## sanity check, very small line can lead to base in the same place and break line.
+	if not tip_pos.is_equal_approx(base_point_1):
+		draw_line_thick(tip_pos, base_point_1, thickness, color_point, duration)
+		draw_line_thick(tip_pos, base_point_2, thickness, color_point, duration)
 
 	if not draw_four_arrows:
 		return
