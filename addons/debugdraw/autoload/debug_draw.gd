@@ -21,6 +21,7 @@ class_name CDebugDraw
 @onready var _PHYSICS_TIME: float = ProjectSettings.get_setting("physics/common/physics_ticks_per_second") / 3600.0
 @export var use_debug_draw: bool = true    ## Draw debug shapes. Disable this to not draw anything.
 @export var auto_clear_shapes: bool = true ## Auto clear quick draw shapes each frame
+@export var show_minor_warnings: bool = false ## Show warning messages
 
 var _started_line_drawing := false
 var _started_triangle_drawing := false
@@ -99,6 +100,8 @@ func draw_arrow(start_pos: Vector3, end_pos: Vector3,
 	if not tip_pos.is_equal_approx(base_point_1):
 		draw_line_thick(tip_pos, base_point_1, thickness, color_point, duration)
 		draw_line_thick(tip_pos, base_point_2, thickness, color_point, duration)
+	elif show_minor_warnings:
+		print_rich("[color=orange] Arrow or handles(%.3f) too small to draw: %s to %s [/color]" % [arrow_len, start_pos, tip_pos] )
 
 	if not draw_four_arrows:
 		return

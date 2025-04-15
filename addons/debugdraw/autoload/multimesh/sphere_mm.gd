@@ -6,6 +6,10 @@ func _enter_tree() -> void:
 
 
 func set_sphere(pos: Vector3, radius: float, color: Color, duration: float) -> void:
+	if is_equal_approx(radius, 0.0):
+		if DebugDraw.show_minor_warnings:
+			print_rich("[color=orange] Trying to draw zero radius sphere at: %s [/color]" % pos)
+		return
 	var id: int = _get_available_id()
 	if id < 0:
 		return

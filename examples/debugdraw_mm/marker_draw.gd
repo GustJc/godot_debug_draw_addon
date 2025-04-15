@@ -4,6 +4,23 @@ var test_process := false
 var test_physics_process := false
 
 
+func _ready() -> void:
+	DebugDraw.draw_line(Vector3.ZERO, Vector3.ZERO)
+	DebugDraw.draw_sphere(Vector3.ZERO, 0.0)
+	DebugDraw.draw_arrow_ray(Vector3.ZERO, Vector3.ONE, 1.0, 0.0)
+	#test_line()
+	#test_line_thick()
+	#test_hits()
+	#test_draw_arrow()
+
+	#test_surf_tool()
+	#test_surf_tool_2_STRIP()
+	#test_surf_tool_pointy_2_STRIP()
+	#test_surf_tool_pointy()
+	#test_zero_duration = true
+	pass
+
+#region Test drawing functions
 func test_draw_arrow() -> void:
 	var pos := position
 	#DebugDraw.print_debug_info()
@@ -98,23 +115,10 @@ func test_sphere() -> void:
 	DebugDraw.draw_sphere(position, 1.0, Color.GREEN, 10.0)
 	position.x += 1
 	DebugDraw.draw_sphere(position, 1.0, Color.BLUE, 10.0)
+#endregion //Test drawing functions
 
 
-
-func _ready() -> void:
-	#test_line()
-	#test_line_thick()
-	#test_hits()
-	#test_draw_arrow()
-
-	#test_surf_tool()
-	#test_surf_tool_2_STRIP()
-	#test_surf_tool_pointy_2_STRIP()
-	#test_surf_tool_pointy()
-	#test_zero_duration = true
-	pass
 #region mesh creation
-
 func test_surf_tool_pointy() -> void:
 	var surface_tool = SurfaceTool.new()
 	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)

@@ -27,6 +27,10 @@ func set_line_relative(pointA : Vector3, dir_len : Vector3, color: Color = Color
 
 
 func set_line(pointA : Vector3, pointB : Vector3, color: Color = Color.RED, duration: float = 1.0):
+	if pointA.is_equal_approx(pointB):
+		if DebugDraw.show_minor_warnings:
+			print_rich("[color=orange] Trying to draw zero length line at: %s [/color]" % pointA)
+		return
 	var id: int = _get_available_id()
 	if id < 0:
 		return
