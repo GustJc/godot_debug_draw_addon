@@ -31,7 +31,6 @@ I'll replace it with proper examples after the basic work is done
 
 
 Shapes to add:
-- Pointy line/arrows
 - Box shape
 - Wireframe shapes (using shader)
 - Label3D (not multimesh, but using a pool as needed)

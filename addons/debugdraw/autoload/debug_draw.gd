@@ -61,16 +61,15 @@ func draw_hit_ray_thick(hit_pos: Vector3, hit_direction: Vector3, duration: floa
 
 func draw_arrow_ray(start_pos: Vector3, direction: Vector3,
 			thickness: float = 1.0, arrow_len: float = 0.5,
-			color: Color = Color.BLUE, color_point: Color = Color.BLUE,
-			duration: float = 0,
+			color: Color = Color.BLUE, duration: float = 0,
 			flip_two_arrows: bool = false, draw_four_arrows: bool = false) -> void:
-	draw_arrow(start_pos, start_pos + direction, thickness, arrow_len, color, color_point,
+	draw_arrow(start_pos, start_pos + direction, thickness, arrow_len, color,
 		duration, flip_two_arrows, draw_four_arrows)
 
 
 func draw_arrow(start_pos: Vector3, end_pos: Vector3,
 			thickness: float = 1.0, arrow_len: float = 0.5,
-			color: Color = Color.BLUE, color_point: Color = Color.BLUE,
+			color: Color = Color.BLUE,
 			duration: float = 0,
 			flip_two_arrows: bool = false, draw_four_arrows: bool = false) -> void:
 	draw_line_thick(start_pos, end_pos, thickness, color, duration)
@@ -98,8 +97,8 @@ func draw_arrow(start_pos: Vector3, end_pos: Vector3,
 
 	## sanity check, very small line can lead to base in the same place and break line.
 	if not tip_pos.is_equal_approx(base_point_1):
-		draw_line_thick(tip_pos, base_point_1, thickness, color_point, duration)
-		draw_line_thick(tip_pos, base_point_2, thickness, color_point, duration)
+		draw_line_thick(tip_pos, base_point_1, thickness, color, duration)
+		draw_line_thick(tip_pos, base_point_2, thickness, color, duration)
 	elif show_minor_warnings:
 		print_rich("[color=orange] Arrow or handles(%.3f) too small to draw: %s to %s [/color]" % [arrow_len, start_pos, tip_pos] )
 
@@ -113,8 +112,8 @@ func draw_arrow(start_pos: Vector3, end_pos: Vector3,
 	base_point_1 = end_pos - direction * arrow_length + rotated_right_vector * (arrow_width / 2.0)
 	base_point_2 = end_pos - direction * arrow_length - rotated_right_vector * (arrow_width / 2.0)
 
-	draw_line_thick(tip_pos, base_point_1, thickness, color_point, duration)
-	draw_line_thick(tip_pos, base_point_2, thickness, color_point, duration)
+	draw_line_thick(tip_pos, base_point_1, thickness, color, duration)
+	draw_line_thick(tip_pos, base_point_2, thickness, color, duration)
 
 #endregion END MultiMesh Macro Functions
 

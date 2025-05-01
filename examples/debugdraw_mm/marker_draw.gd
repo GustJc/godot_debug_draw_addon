@@ -24,14 +24,14 @@ func _ready() -> void:
 func test_draw_arrow() -> void:
 	var pos := position
 	#DebugDraw.print_debug_info()
-	DebugDraw.draw_arrow(pos, pos+Vector3.RIGHT, 1, 0.25, Color.BLUE, Color.BLUE, 5.0)
-	DebugDraw.draw_arrow(pos, pos+Vector3.UP, 1, 0.25, Color.BLUE, Color.BLUE, 5.0)
+	DebugDraw.draw_arrow(pos, pos+Vector3.RIGHT, 1, 0.25, Color.BLUE, 5.0)
+	DebugDraw.draw_arrow(pos, pos+Vector3.UP, 1, 0.25, Color.BLUE, 5.0)
 	#DebugDraw.print_debug_info()
 	await get_tree().create_timer(1).timeout
 
 	pos = pos + Vector3.RIGHT
-	DebugDraw.draw_arrow(pos, pos+Vector3.UP+Vector3.LEFT, 1.5, 0.2, Color.RED, Color.RED, 5.0, false, true)
-	DebugDraw.draw_arrow(pos, pos+Vector3.UP, 1.5, 0.2, Color.RED, Color.RED, 5.0, false, true)
+	DebugDraw.draw_arrow(pos, pos+Vector3.UP+Vector3.LEFT, 1.5, 0.2, Color.RED, 5.0, false, true)
+	DebugDraw.draw_arrow(pos, pos+Vector3.UP, 1.5, 0.2, Color.RED, 5.0, false, true)
 	pass
 
 func _process(_delta: float) -> void:
