@@ -29,6 +29,7 @@ var MAX_SHAPES_SPHERE_TYPE : int = ProjectSettings.get_setting("debug_draw_addon
 var MAX_SHAPES_LINE_TYPE : int = ProjectSettings.get_setting("debug_draw_addon/max_shapes_line_type", 50)
 var MAX_SHAPES_LINE_THICK_TYPE : int = ProjectSettings.get_setting("debug_draw_addon/max_shapes_line_thick_type", 200)
 
+var PRINT_DEFAULT_TIME : float = 10.0 ## Default time a debug print stays onscreen
 
 func _process(delta: float) -> void:
 	if _started_line_drawing:
@@ -256,6 +257,21 @@ func qclear_all_shapes():
 	if _draw_debug_line.mesh is ImmediateMesh:
 		_draw_debug_line.mesh.clear_surfaces()
 #endregion end Quick Draw Functions
+
+
+#region Print and 2D Draw Functions
+func print_text(str: String, time: float = -1) -> void:
+	%DebugUIDisplay.print_message(str, time)
+func text(str: String, time: float = -1) -> void:
+	print_text(str, time)
+
+func set_text(msg_str: String, idx: int = 0) -> void:
+	%DebugUIDisplay.set_text(msg_str, idx)
+func hide_text(idx: int = 0) -> void:
+	%DebugUIDisplay.hide_text(idx)
+func hide_all_texts() -> void:
+	%DebugUIDisplay.hide_all_texts()
+#endregion
 
 
 func print_debug_info():

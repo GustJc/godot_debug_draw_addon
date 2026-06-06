@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://cs60ea0vf8sq8"]
+
+[ext_resource type="Script" uid="uid://dws1ehcl0lylu" path="res://examples/camera_3d.gd" id="1_nxyas"]
+[ext_resource type="Script" uid="uid://b0i41vg4ov5lo" path="res://examples/print and texts/ui_print_menu_buttons.gd" id="2_mypbr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_imyb7"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_41vkr"]
+sky_material = SubResource("ProceduralSkyMaterial_imyb7")
+
+[sub_resource type="Environment" id="Environment_5pfc8"]
+background_mode = 2
+sky = SubResource("Sky_41vkr")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0syls"]
+albedo_color = Color(0.652344, 0.652344, 0.652344, 1)
+
+[node name="World3d" type="Node3D" unique_id=574475512]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1883416378]
+environment = SubResource("Environment_5pfc8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=1549067457]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="WorldEnvironment" unique_id=677270932]
+transform = Transform3D(1, 0, 0, 0, 0.897166, 0.441693, 0, -0.441693, 0.897166, -2.38419e-07, 4.31447, 3.29514)
+script = ExtResource("1_nxyas")
+move_speed = 0.1
+
+[node name="DebugMarker" type="Marker3D" parent="." unique_id=1327030065]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.47836, 2.43838, 0.55191)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=316796842]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.226954, 0)
+material_override = SubResource("StandardMaterial3D_0syls")
+size = Vector3(50, 0.2, 50)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=848251275]
+script = ExtResource("2_mypbr")
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer" unique_id=1235319199]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.5
+offset_top = -23.5
+offset_right = 44.5
+offset_bottom = 23.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="PrintTest" type="Button" parent="CanvasLayer/GridContainer" unique_id=1385942975]
+layout_mode = 2
+text = "Line test"
+
+[node name="PrintPersistent" type="Button" parent="CanvasLayer/GridContainer" unique_id=1582878105]
+layout_mode = 2
+text = "Show persistent text 1+2"
+
+[node name="PrintHidePersistent" type="Button" parent="CanvasLayer/GridContainer" unique_id=1134195167]
+layout_mode = 2
+text = "Hide persistent 1"
+
+[node name="PrintAllHidePersistent2" type="Button" parent="CanvasLayer/GridContainer" unique_id=1195774753]
+layout_mode = 2
+text = "Hide all"
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1395558642]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -95.5
+offset_top = 15.0
+offset_right = 95.5
+offset_bottom = 38.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+text = "Tab to enable camera fly"
+
+[connection signal="pressed" from="CanvasLayer/GridContainer/PrintTest" to="CanvasLayer" method="_test_multiple_prints"]
+[connection signal="pressed" from="CanvasLayer/GridContainer/PrintPersistent" to="CanvasLayer" method="_test_persistent"]
+[connection signal="pressed" from="CanvasLayer/GridContainer/PrintHidePersistent" to="CanvasLayer" method="_test_hide_persistent"]
+[connection signal="pressed" from="CanvasLayer/GridContainer/PrintAllHidePersistent2" to="CanvasLayer" method="_test_hide_all_persistent"]

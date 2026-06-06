@@ -1,0 +1,5 @@
+# Version 0.1.1
+- Added debug text print
+- DebugDraw.text(str, time) to print at left of the string. Vanish after 10s if no time passed
+- DebugDraw.set_text(str, idx) & DebugDraw.hide_text(idx)
+Sets a permanent text around the right side of the string. Only 5 (0-4 idx).

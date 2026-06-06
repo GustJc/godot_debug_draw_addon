@@ -49,20 +49,13 @@ Usable Functions
 ```gdscript
 ## Draw a line
 func draw_line(pointA : Vector3, pointB : Vector3, color: Color = Color.RED, duration: float = 0.0):
-```
 
-```gdscript
 ## Draw a thick line.
 func draw_line_thick(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color: Color = Color.BLACK, duration: float = 0.0):
-```
 
-```gdscript
 ## Draw a ray. Its a line where you pass its position and direction.
 func draw_ray(pointA : Vector3, dir_len : Vector3, color: Color = Color.RED, duration: float = 0.0):
-```
 
-
-```gdscript
 ## Draw a ray with a thick line.
 func draw_ray_thick(pointA : Vector3, dir_len : Vector3, thickness: float = 2.0, color: Color = Color.BLACK, duration: float = 0.0):
 ```
@@ -81,14 +74,29 @@ func draw_sphere_mm(pos: Vector3, radius: float, color: Color = Color(Color.RED,
 ```gdscript
 ## Draws a sphere with a trailing line behind. For raycasts and hits.
 func draw_hit_ray(hit_pos, hit_direction, duration, hit_radius, trail_len, hit_color, trail_color)
-```
 
-
-```gdscript
 ## Same as above. But uses a thick line.
 func draw_hit_ray_thick(hit_pos, hit_direction, duration, hit_radius, trail_len, trail_thickness,
 hit_color, trail_color) 
 ```
+
+### Text and Prints
+
+```gdscript
+## Puts a print on the left of the screen. Vanishes after 10s if no time passes.
+func print_text(str, time) 
+func text(str, time)
+
+## Sets a permanent text on the right side of the screen, 5 max.
+func set_text(str, idx)
+
+## Hides the permanent Text
+func hide_text(idx)
+
+## Hides all permanent texts
+func hide_all_texts()
+```
+
 
 Usable Functions (immediate draw)
 -------------------
@@ -98,10 +106,7 @@ These are kinda deprecated, the first iteration of the DebugDraw used this.
 ```gdscript
 ## Draw a line.
 func qdraw_line(pointA : Vector3, pointB : Vector3, color: Color = Color.BLACK):
-```
 
-
-```gdscript
 ## Draw a ray.
 func qdraw_line_relative(pointA : Vector3, dir_len : Vector3, color: Color = Color.PURPLE):
 ```
@@ -110,10 +115,7 @@ func qdraw_line_relative(pointA : Vector3, dir_len : Vector3, color: Color = Col
 ```gdscript
 ## Draw a ray with a thick line.
 func qdraw_line_relative_thick(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color: Color = Color.BLACK):
-```
 
-
-```gdscript
 ## Draw a ray with a pointy line. The thick line tapers a bit at the end.
 func qdraw_line_relative_thickpointy`(pointA : Vector3, pointB : Vector3, thickness: float = 2.0, color: Color = Color.BLACK):
 ```

@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dsh5y12sgmhgi"]
+[gd_scene format=3 uid="uid://dsh5y12sgmhgi"]
 
 [ext_resource type="Script" uid="uid://b0h7ly4k4l8yt" path="res://addons/debugdraw/autoload/debug_draw.gd" id="1_47vo8"]
 [ext_resource type="Script" uid="uid://d0vvdnq7p1iea" path="res://addons/debugdraw/autoload/multimesh/sphere_mm.gd" id="2_igrmx"]
 [ext_resource type="Script" uid="uid://bn8662umga4aa" path="res://addons/debugdraw/autoload/multimesh/line_thick_mm.gd" id="3_gpp01"]
 [ext_resource type="Script" uid="uid://bi2dl3r2hjd8a" path="res://addons/debugdraw/autoload/multimesh/line_simple_mm.gd" id="4_vr2v8"]
+[ext_resource type="Script" uid="uid://c4t77le2otxka" path="res://addons/debugdraw/autoload/debug_ui_display.gd" id="5_nnpnj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r22qa"]
 shading_mode = 0
@@ -41,12 +42,12 @@ transform_format = 1
 use_colors = true
 visible_instance_count = 0
 
-[node name="DebugDraw" type="Node"]
+[node name="DebugDraw" type="Node" unique_id=1113866886]
 process_priority = 1000
 process_physics_priority = 1000
 script = ExtResource("1_47vo8")
 
-[node name="DrawDebugLine" type="MeshInstance3D" parent="."]
+[node name="DrawDebugLine" type="MeshInstance3D" parent="." unique_id=1557446784]
 unique_name_in_owner = true
 material_override = SubResource("StandardMaterial3D_r22qa")
 cast_shadow = 0
@@ -54,7 +55,7 @@ ignore_occlusion_culling = true
 gi_mode = 0
 mesh = SubResource("ImmediateMesh_nc8b3")
 
-[node name="DrawDebugTriangle" type="MeshInstance3D" parent="."]
+[node name="DrawDebugTriangle" type="MeshInstance3D" parent="." unique_id=128368097]
 unique_name_in_owner = true
 material_override = SubResource("StandardMaterial3D_r22qa")
 cast_shadow = 0
@@ -62,23 +63,110 @@ ignore_occlusion_culling = true
 gi_mode = 0
 mesh = SubResource("ImmediateMesh_nc8b3")
 
-[node name="SphereMM" type="MultiMeshInstance3D" parent="."]
+[node name="SphereMM" type="MultiMeshInstance3D" parent="." unique_id=1642869620]
 unique_name_in_owner = true
 cast_shadow = 0
 gi_mode = 0
 multimesh = SubResource("MultiMesh_dfv31")
 script = ExtResource("2_igrmx")
 
-[node name="LineThickMM" type="MultiMeshInstance3D" parent="."]
+[node name="LineThickMM" type="MultiMeshInstance3D" parent="." unique_id=1928446798]
 unique_name_in_owner = true
 cast_shadow = 0
 gi_mode = 0
 multimesh = SubResource("MultiMesh_o0y6t")
 script = ExtResource("3_gpp01")
 
-[node name="LineSimpleMM" type="MultiMeshInstance3D" parent="."]
+[node name="LineSimpleMM" type="MultiMeshInstance3D" parent="." unique_id=1304734462]
 unique_name_in_owner = true
 cast_shadow = 0
 gi_mode = 0
 multimesh = SubResource("MultiMesh_hdtlx")
 script = ExtResource("4_vr2v8")
+
+[node name="DebugUIDisplay" type="CanvasLayer" parent="." unique_id=20642992]
+unique_name_in_owner = true
+script = ExtResource("5_nnpnj")
+
+[node name="Control" type="Control" parent="DebugUIDisplay" unique_id=220688527]
+clip_contents = true
+layout_mode = 3
+anchor_left = 0.017
+anchor_top = 0.031000001
+anchor_right = 0.29700002
+anchor_bottom = 0.96900004
+offset_left = 0.41599846
+offset_top = -0.08800125
+offset_right = -0.14401245
+offset_bottom = 0.08795166
+mouse_filter = 2
+
+[node name="PrintContainer" type="VBoxContainer" parent="DebugUIDisplay/Control" unique_id=721622981]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PermanentContainer" type="VBoxContainer" parent="DebugUIDisplay" unique_id=1681853402]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_left = 0.578
+anchor_top = 0.031000001
+anchor_right = 0.98600006
+anchor_bottom = 0.231
+offset_left = 0.14398193
+offset_top = -0.08800125
+offset_right = 0.12792969
+offset_bottom = 0.31199646
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Line1" type="RichTextLabel" parent="DebugUIDisplay/PermanentContainer" unique_id=1445088853]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "This is just some random test"
+fit_content = true
+horizontal_alignment = 2
+
+[node name="Line2" type="RichTextLabel" parent="DebugUIDisplay/PermanentContainer" unique_id=1963194489]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "This is just some random test"
+fit_content = true
+horizontal_alignment = 2
+
+[node name="Line3" type="RichTextLabel" parent="DebugUIDisplay/PermanentContainer" unique_id=1202080787]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "This is just some random test"
+fit_content = true
+horizontal_alignment = 2
+
+[node name="Line4" type="RichTextLabel" parent="DebugUIDisplay/PermanentContainer" unique_id=494675154]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "This is just some random test"
+fit_content = true
+horizontal_alignment = 2
+
+[node name="Line5" type="RichTextLabel" parent="DebugUIDisplay/PermanentContainer" unique_id=1611239549]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "This is just some random test"
+fit_content = true
+horizontal_alignment = 2
